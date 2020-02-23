@@ -19,35 +19,35 @@ namespace agileworkspace
             var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddEnvironmentVariables()
-            .AddJsonFile("certificate.json", optional: true, reloadOnChange: true)
+            //.AddJsonFile("certificate.json", optional: true, reloadOnChange: true)          
             .Build();
 
-            var certificateSettings = config.GetSection("certificateSettings");
-            string certificateFileName = certificateSettings.GetValue<string>("filename");
-            string certificatePassword = certificateSettings.GetValue<string>("password");
+            //var certificateSettings = config.GetSection("certificateSettings");
+            //string certificateFileName = certificateSettings.GetValue<string>("filename");
+            //string certificatePassword = certificateSettings.GetValue<string>("password");
 
-            var certificate = new X509Certificate2(certificateFileName, certificatePassword);
-            
-            var host = new WebHostBuilder()
-                .UseKestrel(
-                    options =>
-                    {
-                        options.AddServerHeader = false;
-                        options.Listen(IPAddress.Loopback, 44321, listenOptions =>
-                        {
-                            listenOptions.UseHttps(certificate);
-                        });
-                    }
-                )
-                .UseConfiguration(config)
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
-                .UseUrls("https://localhost:44321")
-                .Build();
+            //var certificate = new X509Certificate2(certificateFileName, certificatePassword);
 
-                host.Run();
+            //var host = new WebHostBuilder()
+            //    .UseKestrel(
+            //        options =>
+            //        {
+            //            options.AddServerHeader = false;
+            //            options.Listen(IPAddress.Loopback, 44321, listenOptions =>
+            //            {
+            //                listenOptions.UseHttps(certificate);
+            //            });
+            //        }
+            //    )
+            //    .UseConfiguration(config)
+            //    .UseContentRoot(Directory.GetCurrentDirectory())
+            //    .UseStartup<Startup>()
+            //    .UseUrls("https://localhost:44321")
+            //    .Build();
 
-            // CreateWebHostBuilder(args).Build().Run();
+            //    host.Run();
+
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
